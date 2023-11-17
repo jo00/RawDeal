@@ -2448,7 +2448,6 @@ C:\Users\Josefina\RiderProjects\RepoProyecto\RawDeal\RawDeal\RawDeal.Tests\bin\D
 C:\Users\Josefina\RiderProjects\RepoProyecto\RawDeal\RawDeal\RawDeal.Tests\bin\Debug\net6.0\data\11-ComplexEffects\31_Undertaker.txt
 C:\Users\Josefina\RiderProjects\RepoProyecto\RawDeal\RawDeal\RawDeal.Tests\bin\Debug\net6.0\data\11-ComplexEffects\32_Jericho.txt
 C:\Users\Josefina\RiderProjects\RepoProyecto\RawDeal\RawDeal\RawDeal.Tests\bin\Debug\net6.0\data\11-ComplexEffects\33_Mankind.txt
-C:\Users\Josefina\RiderProjects\RepoProyecto\RawDeal\RawDeal\RawDeal.Tests\bin\Debug\net6.0\data\cards.json
 C:\Users\Josefina\RiderProjects\RepoProyecto\RawDeal\RawDeal\RawDeal.Tests\bin\Debug\net6.0\data\superstar.json
 C:\Users\Josefina\RiderProjects\RepoProyecto\RawDeal\RawDeal\RawDeal.Tests\bin\Debug\net6.0\RawDeal.Tests.deps.json
 C:\Users\Josefina\RiderProjects\RepoProyecto\RawDeal\RawDeal\RawDeal.Tests\bin\Debug\net6.0\RawDeal.Tests.runtimeconfig.json

@@ -12,9 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="data\cards.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="data\02-InvalidDecks-Tests\11.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
