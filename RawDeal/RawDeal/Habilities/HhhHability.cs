@@ -6,7 +6,7 @@ namespace RawDeal;
 public class HhhHability : Hability
 {
 
-    public HhhHability(JugadorData jugadorData, Jugador jugador, View view) : base(jugadorData, jugador, view)
+    public HhhHability(Player player, PlayerTurnsManager playerTurnsManager, View view, DecksManager decksManager) : base(player, playerTurnsManager, view, decksManager)
     {
     }
 

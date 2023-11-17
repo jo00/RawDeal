@@ -6,7 +6,7 @@ using RawDealView.Formatters;
 public class TheRockHability : Hability
 {
     
-    public TheRockHability(JugadorData jugadorData, Jugador jugador, View view) : base(jugadorData, jugador, view)
+    public TheRockHability(Player player, PlayerTurnsManager playerTurnsManager, View view, DecksManager decksManager) : base(player, playerTurnsManager, view, decksManager)
     {
        
     }
@@ -18,7 +18,7 @@ public class TheRockHability : Hability
 
     public override bool CanPlayerUseHability()
     {
-        if (_jugadorData.ringside.Count > 0)
+        if (player.ringside.Count > 0)
         {
             return true;
  
@@ -42,9 +42,9 @@ public class TheRockHability : Hability
     public override void ApplyEffect()
     {
         _view.SayThatPlayerIsGoingToUseHisAbility(thisSuperstar.Name, thisSuperstar.SuperstarAbility);
-        List<string> strRingside = _jugador.FormatCardSetIntoString(_jugadorData.ringside);
-        int recoveredCardId = _view.AskPlayerToSelectCardsToRecover(_jugadorData.superstar.Name, 1, strRingside);
-        _jugador.MoveCardFromRingsideToArsenal(recoveredCardId);
+        List<string> strRingside = _decksManager.FormatCardSetIntoString(player.ringside);
+        int recoveredCardId = _view.AskPlayerToSelectCardsToRecover(player.superstar.Name, 1, strRingside);
+        _decksManager.MoveCardFromRingsideToArsenal(recoveredCardId);
         
     }
 }

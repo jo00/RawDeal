@@ -6,7 +6,7 @@ namespace RawDeal;
 public class MankindHability : Hability
 {
 
-    public MankindHability(JugadorData jugadorData, Jugador jugador, View view) : base(jugadorData, jugador, view)
+    public MankindHability(Player player, PlayerTurnsManager playerTurnsManager, View view, DecksManager decksManager) : base(player, playerTurnsManager, view, decksManager)
     {
     }
 

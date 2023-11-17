@@ -4,19 +4,20 @@ namespace RawDeal;
 
 public abstract class Hability
 {
-    protected JugadorData _jugadorData;
-    protected Jugador _jugador;
+    protected Player player;
+    protected PlayerTurnsManager playerTurnsManager;
     protected View _view;
     protected Superstar thisSuperstar;
-
+    protected DecksManager _decksManager;
     
 
-    public Hability(JugadorData jugadorData, Jugador jugador, View view)
+    public Hability(Player player, PlayerTurnsManager playerTurnsManager, View view, DecksManager decksManager)
     {
-        _jugadorData = jugadorData;
-        _jugador = jugador;
+        this.player = player;
+        this.playerTurnsManager = playerTurnsManager;
         _view = view;
-        thisSuperstar = _jugadorData.superstar;
+        _decksManager = decksManager;
+        thisSuperstar = this.player.superstar;
     }
     
     public abstract bool CanPlayerUseHability();
@@ -31,7 +32,7 @@ public abstract class Hability
         {
             if (AskBeforeUsingIt())
             {
-                return _view.DoesPlayerWantToUseHisAbility(_jugadorData.superstar.Name);
+                return _view.DoesPlayerWantToUseHisAbility(player.superstar.Name);
             }
 
             else

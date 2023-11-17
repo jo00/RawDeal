@@ -2,23 +2,27 @@
 namespace RawDeal;
 
 
-public class JugadorData
+public class Player
 {
     public bool canKeepPlaying;
+    
     public Superstar superstar;
     public List<Card> arsenal;
     public List<Card> hand;
     public List<Card> ringside;
     public List<Card> ringarea;
+    
     public int fortitudRating;
-    public Jugador oponente;
-    public JugadorData oponenteData;
+    public PlayerTurnsManager oponente;
+    public Player oponenteData;
     public bool lost;
     public bool manKindType = false;
 
+    public Hability hability;
+
     
     
-    public JugadorData(Dictionary<string, Card> mazo, Superstar superstar)
+    public Player(Dictionary<string, Card> mazo, Superstar superstar)
     {
         this.superstar = superstar;
         arsenal = mazo.Values.ToList();
@@ -30,12 +34,17 @@ public class JugadorData
 
     }
 
-    public void CargarOponente(Jugador oponente)
+    public void LoadHability(Hability hability)
+    {
+        this.hability = hability;
+    }
+
+    public void LoadOponente(PlayerTurnsManager oponente)
     {
         this.oponente = oponente;
     }
 
-    public void CargarDataOponente(JugadorData oponenteData)
+    public void LoadDataOponente(Player oponenteData)
     {
         this.oponenteData = oponenteData;
 

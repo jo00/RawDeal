@@ -6,7 +6,7 @@ namespace RawDeal;
 public class StoneColdHability : Hability
 {
 
-    public StoneColdHability(JugadorData jugadorData, Jugador jugador, View view) : base(jugadorData, jugador, view)
+    public StoneColdHability(Player player, PlayerTurnsManager playerTurnsManager, View view, DecksManager decksManager) : base(player, playerTurnsManager, view, decksManager)
     {
     }
 
@@ -19,7 +19,7 @@ public class StoneColdHability : Hability
 
     public override bool CanPlayerUseHability()
     {
-        if (_jugadorData.arsenal.Count > 0)
+        if (player.arsenal.Count > 0)
         {
             return true;
         }
@@ -42,19 +42,19 @@ public class StoneColdHability : Hability
     public override void ApplyEffect()
     {
         _view.SayThatPlayerIsGoingToUseHisAbility(thisSuperstar.Name, thisSuperstar.SuperstarAbility);
-        _jugador.DrawCardsFromArsenalToHand(1);
+        _decksManager.DrawCardsFromArsenalToHand(1);
         _view.SayThatPlayerDrawCards(thisSuperstar.Name, 1);
         ReturnCardFromHandToArsenal();
     }
     
     public void ReturnCardFromHandToArsenal()
     {
-        List<string> strHand = _jugador.FormatCardSetIntoString(_jugadorData.hand);
+        List<string> strHand = _decksManager.FormatCardSetIntoString(player.hand);
         int idOfCardToReturn =
             _view.AskPlayerToReturnOneCardFromHisHandToHisArsenal(thisSuperstar.Name, strHand);
-        Card returnedCard = _jugadorData.hand[idOfCardToReturn];
-        _jugadorData.arsenal.Insert(0, returnedCard);
-        _jugadorData.hand.RemoveAt(idOfCardToReturn);
+        Card returnedCard = player.hand[idOfCardToReturn];
+        player.arsenal.Insert(0, returnedCard);
+        player.hand.RemoveAt(idOfCardToReturn);
 
     }
 

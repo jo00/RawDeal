@@ -4,7 +4,7 @@ using System.Linq;
 
 
 
-public class Builder
+public class GameDataBuilder
 {
     private Dictionary<string, Card> dictCards;
     private Dictionary<string, Superstar> dictSuperstars;
@@ -71,7 +71,6 @@ public class Builder
 
     public Superstar GenerarSuperestrella(List<string> mazoValidado)
     {
-        //agregar superestrella
         String[] superstarNameArr = mazoValidado[0].Split('(');
         int largoSuperstarName = superstarNameArr[0].Length;
         string nombreSuperstar = superstarNameArr[0].Substring(0, largoSuperstarName - 1) ;

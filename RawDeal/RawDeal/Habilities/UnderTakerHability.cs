@@ -9,7 +9,7 @@ public class UndertakerHability : Hability
 {
     private int _uses;
 
-    public UndertakerHability(JugadorData jugadorData, Jugador jugador, View view) : base(jugadorData, jugador, view)
+    public UndertakerHability(Player player, PlayerTurnsManager playerTurnsManager, View view, DecksManager decksManager) : base(player, playerTurnsManager, view, decksManager)
     {
     }
 
@@ -24,7 +24,7 @@ public class UndertakerHability : Hability
     {
         if (_uses == 0)
         {
-            if (_jugadorData.hand.Count >= 2)
+            if (player.hand.Count >= 2)
             {
                 return true;
             }
@@ -63,21 +63,21 @@ public class UndertakerHability : Hability
 
     public void DiscardCardFromHand(int numberOfCardsLeftToDiscard)
     {
-        List<string> strHand = _jugador.FormatCardSetIntoString(_jugadorData.hand);
+        List<string> strHand = _decksManager.FormatCardSetIntoString(player.hand);
         int idOfCardToDiscard =
             _view.AskPlayerToSelectACardToDiscard(strHand, thisSuperstar.Name, thisSuperstar.Name, numberOfCardsLeftToDiscard);
-        Card discardedCard = _jugadorData.hand[idOfCardToDiscard];
-        _jugadorData.ringside.Add(discardedCard);
-        _jugadorData.hand.RemoveAt(idOfCardToDiscard);
+        Card discardedCard = player.hand[idOfCardToDiscard];
+        player.ringside.Add(discardedCard);
+        player.hand.RemoveAt(idOfCardToDiscard);
 
     }
 
     public void RescueCardFromRingArea()
     {
-        List<string> strRingside = _jugador.FormatCardSetIntoString(_jugadorData.ringside);
+        List<string> strRingside = _decksManager.FormatCardSetIntoString(player.ringside);
         int idCardToRecover = _view.AskPlayerToSelectCardsToPutInHisHand(thisSuperstar.Name, 1, strRingside);
-        Card pickedCard = _jugadorData.ringside[idCardToRecover];
-        _jugadorData.hand.Add(pickedCard);
+        Card pickedCard = player.ringside[idCardToRecover];
+        player.hand.Add(pickedCard);
     }
     
     

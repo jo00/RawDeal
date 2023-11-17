@@ -6,7 +6,7 @@ namespace RawDeal;
 public class JerichoHability : Hability
 {
 
-    public JerichoHability(JugadorData jugadorData, Jugador jugador, View view) : base(jugadorData, jugador, view)
+    public JerichoHability(Player player, PlayerTurnsManager playerTurnsManager, View view, DecksManager decksManager) : base(player, playerTurnsManager, view, decksManager)
     {
     }
 
@@ -19,7 +19,7 @@ public class JerichoHability : Hability
 
     public override bool CanPlayerUseHability()
     {
-        if (_jugadorData.hand.Count >= 1)
+        if (player.hand.Count >= 1)
         {
             return true;
         }
@@ -50,23 +50,23 @@ public class JerichoHability : Hability
 
     public void DiscardCardFromOpponentsHand()
     {
-        Superstar opponentSuperstar = _jugadorData.oponenteData.superstar;
+        Superstar opponentSuperstar = player.oponenteData.superstar;
 
-        List<string> strHand = _jugadorData.oponente.FormatCardSetIntoString(_jugadorData.oponenteData.hand);
+        List<string> strHand = _decksManager.FormatCardSetIntoString(player.oponenteData.hand);
         int idOfCardToDiscard =
             _view.AskPlayerToSelectACardToDiscard(strHand, opponentSuperstar.Name, opponentSuperstar.Name, 1);
-        Card discardedCard = _jugadorData.oponenteData.hand[idOfCardToDiscard];
-        _jugadorData.oponenteData.ringside.Add(discardedCard);
-        _jugadorData.oponenteData.hand.RemoveAt(idOfCardToDiscard);
+        Card discardedCard = player.oponenteData.hand[idOfCardToDiscard];
+        player.oponenteData.ringside.Add(discardedCard);
+        player.oponenteData.hand.RemoveAt(idOfCardToDiscard);
     }
     public void DiscardCardFromHand()
     {
-        List<string> strHand = _jugador.FormatCardSetIntoString(_jugadorData.hand);
+        List<string> strHand = _decksManager.FormatCardSetIntoString(player.hand);
         int idOfCardToDiscard =
             _view.AskPlayerToSelectACardToDiscard(strHand, thisSuperstar.Name, thisSuperstar.Name, 1);
-        Card discardedCard = _jugadorData.hand[idOfCardToDiscard];
-        _jugadorData.ringside.Add(discardedCard);
-        _jugadorData.hand.RemoveAt(idOfCardToDiscard);
+        Card discardedCard = player.hand[idOfCardToDiscard];
+        player.ringside.Add(discardedCard);
+        player.hand.RemoveAt(idOfCardToDiscard);
     }
 
 
