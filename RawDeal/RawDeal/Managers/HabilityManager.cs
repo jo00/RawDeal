@@ -8,12 +8,6 @@ public class HabilityManager
     private Player _player;
     private PlayerTurnsManager _playerTurnsManager;
     private View view;
-    public List<Card> playableCards;
-    private List<int> indexesInHandOfPlayableCards;
-    private List<string> strPlaysInfo;
-    private int IndexSelectedCardToPlay;
-    private Card chosedCardToPlay;
-    private bool endOfTurn;
     private Hability hability;
     private int maxUses = 100;
 

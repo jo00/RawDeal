@@ -12,9 +12,6 @@ public class DecksManager
     private List<int> indexesInHandOfPlayableCards;
     private List<string> strPlayablesCardsInfo;
     private bool endOfTurn;
-    private Hability hability;
-    private int usesOfHabilityDuringTurn;
-    private int maxUses = 100;
     
     public DecksManager(Player player, View view)
     {

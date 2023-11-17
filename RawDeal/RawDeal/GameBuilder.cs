@@ -10,25 +10,21 @@ public class GameBuilder
     private string _deckFolder;
 
 
-    private List<string> mazoVersionString1;
-    private List<string> mazoVersionString2;
+    private List<List<string>> _strDecks = new List<List<string>>();
+    private List<Dictionary<string, Card>> _decks = new List<Dictionary<string, Card>>();
 
-    private Dictionary<string, Card> mazo1;
-    private Dictionary<string, Card> mazo2;
+    private List<Superstar> _superstars = new List<Superstar>();
 
-    private Superstar superestrella1;
-    private Superstar superestrella2;
-
-    private List<PlayerTurnsManager> playersManagers = new List<PlayerTurnsManager>();
-    private List<Player> playersData = new List<Player>();
+    private List<PlayerTurnsManager> _playersManagers = new List<PlayerTurnsManager>();
+    private List<Player> _playersData = new List<Player>();
 
     private GameDataBuilder _gameDataBuilder;
 
-    private DeckValidator deckValidation1;
-    private DeckValidator deckValidation2;
+    private List<DeckValidator> _deckValidators = new List<DeckValidator>();
+    
 
-    private Dictionary<string, Card> dictCards;
-    private Dictionary<string, Superstar> dictSuperstars;
+    private Dictionary<string, Card> _dictCards;
+    private Dictionary<string, Superstar> _dictSuperstars;
 
     public GameBuilder(GameDataBuilder gameDataBuilder, View view, string deckFolder)
 
@@ -46,26 +42,26 @@ public class GameBuilder
 
     public void GenerateDataFromJsons()
     {
-        dictCards = _gameDataBuilder.GenerarDatosCartas();
-        dictSuperstars = _gameDataBuilder.GenerarDatosSuperstars();
+        _dictCards = _gameDataBuilder.GenerarDatosCartas();
+        _dictSuperstars = _gameDataBuilder.GenerarDatosSuperstars();
 
     }
 
     public void CreateValidators()
     {
-        deckValidation1 = new DeckValidator(dictCards, dictSuperstars);
-        deckValidation2 = new DeckValidator(dictCards, dictSuperstars);
+        _deckValidators.Add(new DeckValidator(_dictCards, _dictSuperstars));
+        _deckValidators.Add(new DeckValidator(_dictCards, _dictSuperstars));
     }
 
     public bool ValidateDecksForBothPlayers()
     {
-        mazoVersionString1 = ElegirMazo(deckValidation1);
-        bool validacionMazo1 = deckValidation1.ValidateDesk();
+        _strDecks.Add(ElegirMazo(_deckValidators[0]));
+        bool validacionMazo1 = _deckValidators[0].ValidateDesk();
 
         if (validacionMazo1)
         {
-            mazoVersionString2 = ElegirMazo(deckValidation2);
-            bool validacionMazo2 = deckValidation2.ValidateDesk();
+            _strDecks.Add(ElegirMazo(_deckValidators[1]));
+            bool validacionMazo2 = _deckValidators[1].ValidateDesk();
 
             if (validacionMazo2)
             {
@@ -98,28 +94,28 @@ public class GameBuilder
 
         DefinirTurnos();
 
-        playersManagers[0].TakeHandSize(playersData[0].superstar.HandSize);
-        playersManagers[1].TakeHandSize(playersData[1].superstar.HandSize);
+        _playersManagers[0].TakeHandSize(_playersData[0].superstar.HandSize);
+        _playersManagers[1].TakeHandSize(_playersData[1].superstar.HandSize);
 
 
     }
 
     public void InstanciarCartasDeLosMazosComoObjetos()
     {
-        mazo1 = _gameDataBuilder.GenerarMazo(mazoVersionString1);
-        mazo2 = _gameDataBuilder.GenerarMazo(mazoVersionString2);
+        _decks.Add(_gameDataBuilder.GenerarMazo(_strDecks[0]));
+        _decks.Add(_gameDataBuilder.GenerarMazo(_strDecks[1]));
 
-        superestrella1 = _gameDataBuilder.GenerarSuperestrella(mazoVersionString1);
-        superestrella2 = _gameDataBuilder.GenerarSuperestrella(mazoVersionString2);
+        _superstars.Add(_gameDataBuilder.GenerarSuperestrella(_strDecks[0]));
+        _superstars.Add(_gameDataBuilder.GenerarSuperestrella(_strDecks[1]));
     }
 
     public void DefinirTurnos()
     {
-        if (superestrella1.SuperstarValue > superestrella2.SuperstarValue)
+        if (_superstars[0].SuperstarValue > _superstars[1].SuperstarValue)
         {
             HacerQueElPrimerJugadorEnIngresarDatosEmpiece();
         }
-        else if (superestrella1.SuperstarValue < superestrella2.SuperstarValue)
+        else if (_superstars[0].SuperstarValue < _superstars[1].SuperstarValue)
         {
             HacerQueElSegundoJugadorEnIngresarDatosEmpiece();
         }
@@ -134,23 +130,23 @@ public class GameBuilder
     public void HacerQueElPrimerJugadorEnIngresarDatosEmpiece()
     {
 
-        playersData.Add(new Player(mazo1, superestrella1));
-        playersData.Add(new Player(mazo2, superestrella2));
+        _playersData.Add(new Player(_decks[0], _superstars[0]));
+        _playersData.Add(new Player(_decks[1], _superstars[1]));
         InstanciarJugadores();
     }
 
     public void HacerQueElSegundoJugadorEnIngresarDatosEmpiece()
     {
-        playersData.Add(new Player(mazo2, superestrella2));
-        playersData.Add(new Player(mazo1, superestrella1));
+        _playersData.Add(new Player(_decks[1], _superstars[1]));
+        _playersData.Add(new Player(_decks[0], _superstars[0]));
         InstanciarJugadores();
 
     }
     
     public void InstanciarJugadores()
     {
-        playersManagers.Add(new PlayerTurnsManager(playersData[0], _view));
-        playersManagers.Add(new PlayerTurnsManager(playersData[1], _view));
+        _playersManagers.Add(new PlayerTurnsManager(_playersData[0], _view));
+        _playersManagers.Add(new PlayerTurnsManager(_playersData[1], _view));
         CargarOponentes();
 
     }
@@ -158,21 +154,21 @@ public class GameBuilder
     
     public void CargarOponentes()
     {
-        playersData[0].LoadOponente(playersManagers[1]);
-        playersData[1].LoadOponente(playersManagers[0]);
-        playersData[0].LoadDataOponente(playersData[1]);
-        playersData[1].LoadDataOponente(playersData[0]);
+        _playersData[0].LoadOponente(_playersManagers[1]);
+        _playersData[1].LoadOponente(_playersManagers[0]);
+        _playersData[0].LoadDataOponente(_playersData[1]);
+        _playersData[1].LoadDataOponente(_playersData[0]);
 
     }
 
     public List<PlayerTurnsManager> ObtainPlayersManagement()
     {
-        return playersManagers;
+        return _playersManagers;
     }
 
     public List<Player> ObtainPlayersInfo()
     {
-        return playersData;
+        return _playersData;
     }
 
 

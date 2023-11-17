@@ -2,7 +2,6 @@ using RawDealView.Formatters;
 
 namespace RawDeal;
 
-// Root myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(myJsonResponse);
 
 
 using System.Collections.Generic;
